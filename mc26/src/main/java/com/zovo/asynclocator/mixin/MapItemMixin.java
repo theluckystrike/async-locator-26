@@ -16,6 +16,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class MapItemMixin {
 	@Inject(method = "inventoryTick", at = @At("HEAD"))
 	private void asynclocator$finishCarriedMap(ItemStack stack, ServerLevel level, Entity owner, EquipmentSlot slot, CallbackInfo ci) {
-		MapLogic.resolve(stack, level);
+		MapLogic.resolve(stack, level, null);
 	}
 }

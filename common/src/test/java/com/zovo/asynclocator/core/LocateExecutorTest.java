@@ -77,19 +77,74 @@ class LocateExecutorTest {
 	}
 
 	@Test
-	void failingSearchDeliversNull() throws Exception {
+	void failingSearchCallsOnFailNotOnMain() throws Exception {
 		long failedBefore = LocateExecutor.FAILED.get();
-		CountDownLatch done = new CountDownLatch(1);
-		AtomicReference<Object> got = new AtomicReference<>("unset");
+		CountDownLatch failed = new CountDownLatch(1);
+		AtomicInteger results = new AtomicInteger();
+		AtomicReference<String> failThread = new AtomicReference<>();
 		LocateExecutor.<Object>submit("boom", () -> {
 			throw new IllegalStateException("boom");
-		}, main, v -> {
+		}, main, v -> results.incrementAndGet(), () -> {
+			failThread.set(Thread.currentThread().getName());
+			failed.countDown();
+		});
+		assertTrue(failed.await(5, TimeUnit.SECONDS));
+		main.submit(() -> {}).get(5, TimeUnit.SECONDS);
+		assertEquals(0, results.get(), "a failed search must not look like 'nothing found'");
+		assertEquals("fake-server-thread", failThread.get());
+		assertEquals(failedBefore + 1, LocateExecutor.FAILED.get());
+	}
+
+	@Test
+	void nothingFoundDeliversNull() throws Exception {
+		CountDownLatch done = new CountDownLatch(1);
+		AtomicReference<Object> got = new AtomicReference<>("unset");
+		LocateExecutor.<Object>submit("miss", () -> null, main, v -> {
 			got.set(v);
 			done.countDown();
 		});
 		assertTrue(done.await(5, TimeUnit.SECONDS));
 		assertNull(got.get());
-		assertEquals(failedBefore + 1, LocateExecutor.FAILED.get());
+	}
+
+	@Test
+	void stopDropsRunningAndQueuedResults() throws Exception {
+		LocateExecutor.start(1, false);
+		CountDownLatch started = new CountDownLatch(1);
+		AtomicInteger callbacks = new AtomicInteger();
+		LocateExecutor.submit("running", () -> {
+			started.countDown();
+			long end = System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(300);
+			while (System.nanoTime() < end) Thread.onSpinWait(); // not interruptible, like a CPU-bound search
+			return 1;
+		}, main, v -> callbacks.incrementAndGet(), callbacks::incrementAndGet);
+		LocateExecutor.submit("queued", () -> 2, main, v -> callbacks.incrementAndGet(), callbacks::incrementAndGet);
+		assertTrue(started.await(5, TimeUnit.SECONDS));
+		LocateExecutor.stop();
+		Thread.sleep(500);
+		main.submit(() -> {}).get(5, TimeUnit.SECONDS);
+		assertEquals(0, callbacks.get(), "nothing may reach the main thread after stop");
+	}
+
+	@Test
+	void handOffIsNeverRunInsideSubmit() throws Exception {
+		// With an executor that runs tasks inline (a server thread outside a task does that), the callback must still
+		// run on the locating thread that finished the search, never inside submit() on the caller's thread.
+		String caller = Thread.currentThread().getName();
+		List<String> threads = new CopyOnWriteArrayList<>();
+		CountDownLatch done = new CountDownLatch(50);
+		for (int i = 0; i < 50; i++) {
+			LocateExecutor.submit("fast", () -> null, Runnable::run, v -> {
+				threads.add(Thread.currentThread().getName());
+				done.countDown();
+			});
+		}
+		assertTrue(done.await(5, TimeUnit.SECONDS));
+		assertEquals(50, threads.size());
+		for (String t : threads) {
+			assertNotEquals(caller, t);
+			assertTrue(t.startsWith("AsyncLocator-"), t);
+		}
 	}
 
 	@Test

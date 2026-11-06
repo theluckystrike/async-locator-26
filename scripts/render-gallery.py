@@ -54,7 +54,9 @@ def chart(path):
             y = y0 + j * (bh + 4)
             x1 = left + max(v * scale, 3)
             d.rounded_rectangle([left, y, x1, y + bh], 4, fill=col)
-            d.text((x1 + 10, y + 2), f'{v:g} ms', font=font(20), fill=INK)
+            label = f'{v:g} ms'
+            lx = max(x1 + 10, bx + 10) if v * scale < 60 else x1 + 10   # keep short labels clear of the 50 ms line
+            d.text((lx, y + 2), label, font=font(20), fill=INK)
     d.line([left, top - 10, left, H - 70], fill=INK2, width=2)
     im.save(path)
 
@@ -65,7 +67,7 @@ def console_shot(path):
     rows = []
     for ln in open(console, encoding='utf-8', errors='replace'):
         ln = ln.rstrip('\n')
-        if keep.search(ln) and 'on_treasure_maps' not in ln:
+        if keep.search(ln) and 'on_treasure_maps' not in ln and '[main/' not in ln:
             ln = ln.replace('System chat: ', '')
             rows.append(ln[:150])
     rows = rows[:26]

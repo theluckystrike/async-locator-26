@@ -14,7 +14,7 @@ for d in sorted(root.glob(f'{ver}-*-r*')):
         rows.setdefault((l['structure'], mode), []).append(l)
     func.setdefault(mode, []).append({k: s[k] for k in ('burst_maps_with_target', 'burst_distinct_targets', 'pending_markers_in_burst_maps',
                                                           'lore_removal_patches', 'trade_map_ids', 'trade_locating_lore',
-                                                          'dolphin_search_logged', 'mixin_errors', 'exceptions')})
+                                                          'dolphin_search_logged', 'stale_map_finished', 'mixin_errors', 'exceptions')})
 order = []
 for k in rows:
     if k[0] not in order:

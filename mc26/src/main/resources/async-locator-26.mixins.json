@@ -16,7 +16,9 @@
 		"MerchantOfferAccessor",
 		"MinecraftServerMixin",
 		"ServerChunkCacheMixin",
-		"SlotMixin"
+		"ServerPlayerMixin",
+		"SlotMixin",
+		"StructureCheckMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

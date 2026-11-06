@@ -16,7 +16,9 @@
 		"MerchantOfferAccessor",
 		"MinecraftServerMixin",
 		"ServerChunkCacheMixin",
+		"ServerPlayerMixin",
 		"SlotMixin",
+		"StructureCheckMixin",
 		"TreasureMapForEmeraldsMixin"
 	],
 	"injectors": {

@@ -52,7 +52,7 @@ def read_nbt(buf):
 
 def maps(d):
     out = {}
-    for f in sorted(Path(d, 'maps').glob('map_*.dat')):
+    for f in sorted(p for p in Path(d, 'maps').glob('map_*.dat') if p.stem.split('_', 1)[1].isdigit()):
         root = read_nbt(gzip.decompress(f.read_bytes()))
         data = root.get('data', root)
         out[f.stem] = data

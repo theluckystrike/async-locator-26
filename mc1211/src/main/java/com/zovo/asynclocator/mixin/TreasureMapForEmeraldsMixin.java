@@ -1,6 +1,7 @@
 package com.zovo.asynclocator.mixin;
 
 import com.zovo.asynclocator.AsyncLocatorMod;
+import com.zovo.asynclocator.Locating;
 import com.zovo.asynclocator.MapLogic;
 import java.util.Optional;
 import net.minecraft.core.Holder;
@@ -43,7 +44,7 @@ public abstract class TreasureMapForEmeraldsMixin {
 		cancellable = true
 	)
 	private void asynclocator$offerAsync(ServerLevel level, Entity trader, RandomSource random, CallbackInfoReturnable<MerchantOffer> cir) {
-		if (!AsyncLocatorMod.config().merchantExplorationMaps || !(trader instanceof AbstractVillager)) return;
+		if (!AsyncLocatorMod.config().merchantExplorationMaps || !(trader instanceof AbstractVillager) || !Locating.structuresEnabled(level)) return;
 		ItemStack map = new ItemStack(Items.FILLED_MAP);
 		map.set(DataComponents.ITEM_NAME, Component.translatable(displayName));
 		MapLogic.startAsync(level, map, destination, trader.blockPosition(), 100, true, (byte) 2, destinationType, trader);

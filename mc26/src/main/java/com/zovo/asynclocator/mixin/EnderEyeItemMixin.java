@@ -41,7 +41,7 @@ public abstract class EnderEyeItemMixin {
 		cancellable = true
 	)
 	private void asynclocator$useAsync(Level level, Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
-		if (!AsyncLocatorMod.config().eyeOfEnder || !(level instanceof ServerLevel serverLevel)) return;
+		if (!AsyncLocatorMod.config().eyeOfEnder || !(level instanceof ServerLevel serverLevel) || !Locating.structuresEnabled(serverLevel)) return;
 		UUID id = player.getUUID();
 		if (!Locating.EYE_SEARCHES.add(id)) {
 			cir.setReturnValue(InteractionResult.CONSUME);
@@ -64,7 +64,7 @@ public abstract class EnderEyeItemMixin {
 			serverLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDER_EYE_LAUNCH, SoundSource.NEUTRAL, 1.0F, pitch);
 			stack.consume(1, player);
 			player.awardStat(Stats.ITEM_USED.get(Items.ENDER_EYE));
-		});
+		}, () -> Locating.EYE_SEARCHES.remove(id));
 		cir.setReturnValue(InteractionResult.SUCCESS_SERVER);
 	}
 }

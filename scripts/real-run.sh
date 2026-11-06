@@ -31,6 +31,7 @@ simulation-distance=4
 spawn-protection=0
 enable-jmx-monitoring=true
 max-tick-time=-1
+pause-when-empty-seconds=-1
 sync-chunk-writes=false
 motd=async locator test
 P
@@ -107,6 +108,10 @@ send "summon villager 21 200 2 {Tags:[\"carto\"],VillagerData:{profession:\"mine
 send "summon dolphin 4 202 4 {Tags:[\"dolly\"],GotFish:1b}"
 for i in $(seq 1 8); do sleep 5; send "data get entity @e[type=villager,tag=carto,limit=1] Offers"; done
 send "data get entity @e[type=dolphin,tag=dolly,limit=1]"
+# A map left pending by a search the server no longer knows (as after a restart): it must search again and finish.
+send "summon item 14 200 14 {Tags:[\"stale\"],Item:{id:\"minecraft:filled_map\",count:1,components:{\"minecraft:map_id\":900,\"minecraft:custom_data\":{asynclocator_pending:{id:\"stale-test\",dest:\"#minecraft:on_treasure_maps\",x:0,y:93,z:0,radius:50,skip:0b,zoom:1b,decoration:\"minecraft:red_x\"}}}}}"
+sleep 6
+send "data get entity @e[type=item,tag=stale,limit=1] Item"
 sleep 3
 send "stop"
 for i in $(seq 1 120); do kill -0 $SV 2>/dev/null || break; sleep 0.5; done
@@ -114,7 +119,10 @@ T_END=$(now); echo "stopped,$T_END,$T_END,ok" >> "$EVENTS"
 cleanup; trap - EXIT
 cp "$SRV/logs/latest.log" "$EV/latest.log" 2>/dev/null || true
 [ -f "$SRV/config/async-locator.json" ] && cp "$SRV/config/async-locator.json" "$EV/"
-mkdir -p "$EV/maps"; find "$SRV"/world* -name 'map_*.dat' -exec cp {} "$EV/maps/" \; 2>/dev/null || true
+mkdir -p "$EV/maps"
+# 1.21.x stores maps as data/map_<id>.dat, 26.x as data/.../maps/<id>.dat
+find "$SRV"/world* -name 'map_*.dat' -exec cp {} "$EV/maps/" \; 2>/dev/null || true
+find "$SRV"/world* -path '*/maps/*.dat' 2>/dev/null | while read -r f; do cp "$f" "$EV/maps/map_$(basename "$f")"; done
 du -sk "$SRV"/world* 2>/dev/null | awk -v ev="$EV" '{print $1"KiB\t"$2}' > "$EV/deleted-world.txt" || true
 rm -rf "$SRV"/world* "$FIFO"
 python3 scripts/analyze-run.py "$EV" | tee "$EV/summary.md"

@@ -21,6 +21,11 @@ public final class PendingMaps {
 		return id;
 	}
 
+	/** Marks a known id as searching again (a stale map whose search is re-run). */
+	public static void activate(String id) {
+		if (id != null) ACTIVE.add(id);
+	}
+
 	public static boolean isActive(String id) {
 		return id != null && ACTIVE.contains(id);
 	}

@@ -18,7 +18,7 @@
 	"mixins": ["async-locator-26.mixins.json"],
 	"depends": {
 		"fabricloader": ">=0.17.0",
-		"minecraft": ">=26.1 <26.4",
+		"minecraft": "~26.3",
 		"java": ">=25"
 	},
 	"breaks": { "asynclocator": "*" }

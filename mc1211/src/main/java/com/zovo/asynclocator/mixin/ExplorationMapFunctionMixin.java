@@ -1,6 +1,7 @@
 package com.zovo.asynclocator.mixin;
 
 import com.zovo.asynclocator.AsyncLocatorMod;
+import com.zovo.asynclocator.Locating;
 import com.zovo.asynclocator.MapLogic;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -46,6 +47,7 @@ public abstract class ExplorationMapFunctionMixin {
 		Vec3 origin = context.getOptionalParameter(LootContextParams.ORIGIN);
 		if (origin == null) return;
 		ServerLevel level = context.getLevel();
+		if (!Locating.structuresEnabled(level)) return;
 		ItemStack map = new ItemStack(Items.FILLED_MAP);
 		cir.setReturnValue(MapLogic.startAsync(
 			level, map, destination, BlockPos.containing(origin), searchRadius, skipKnownStructures, zoom,

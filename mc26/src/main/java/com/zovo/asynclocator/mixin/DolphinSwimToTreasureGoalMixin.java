@@ -33,7 +33,7 @@ public abstract class DolphinSwimToTreasureGoalMixin {
 		cancellable = true
 	)
 	private void asynclocator$startAsync(CallbackInfo ci) {
-		if (!AsyncLocatorMod.config().dolphinTreasure || !(dolphin.level() instanceof ServerLevel level)) return;
+		if (!AsyncLocatorMod.config().dolphinTreasure || !(dolphin.level() instanceof ServerLevel level) || !Locating.structuresEnabled(level)) return;
 		if (asynclocator$task != null) asynclocator$task.cancel();
 		asynclocator$task = Locating.nearestMapStructure(level, StructureTags.DOLPHIN_LOCATED, dolphin.blockPosition(), 50, false, pos -> {
 			asynclocator$task = null;
@@ -43,6 +43,9 @@ public abstract class DolphinSwimToTreasureGoalMixin {
 			} else {
 				stuck = true;
 			}
+		}, () -> {
+			asynclocator$task = null;
+			stuck = true;
 		});
 		ci.cancel();
 	}

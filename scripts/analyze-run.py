@@ -67,6 +67,11 @@ out['trade_locating_lore'] = [o.count('Locating structure') for o in offers]
 out['trade_offer_last'] = re.sub(r'\s+', ' ', offers[-1])[:1500] if offers else None
 out['lore_removal_patches'] = console.count('!minecraft:lore')
 out['dolphin_search_logged'] = bool(re.search(r'Search for minecraft:dolphin_located', console))
+stale = re.findall(r'Map has the following entity data: (\{[^\n]*map_id": 900[^\n]*\})|Map #900[^\n]*has the following entity data: (\{[^\n]*\})', console)
+stale = [x or y for x, y in stale]
+out['stale_map_dump'] = stale[-1][:400] if stale else None
+out['stale_map_finished'] = bool(stale) and 'red_x' in stale[-1] and 'asynclocator_pending' not in stale[-1]
+out['stale_map_restart_logged'] = 'Restarting the search for a pending map' in console
 out['mixin_errors'] = len(re.findall(r'Mixin apply .* failed|InvalidInjectionException|MixinTransformerError', console))
 out['exceptions'] = len(re.findall(r'^\S*Exception|\tat ', console, re.M))
 (ev / 'summary.json').write_text(json.dumps(out, indent=2))
@@ -79,5 +84,5 @@ for s in out['locates']:
     print(f"| {s['structure']} | {s['wall_ms']/1000:.1f} | {s['search_ms_logged']} | {s.get('ticks')} / {s['ticks_expected']} | {s.get('max_ms')} | {s['longest_stall_ms']} | {s.get('over_50ms')} | {s['result']} |")
 print()
 for k in ('time_query_answers', 'tick_query_avg_ms', 'burst_maps_dumped', 'burst_maps_with_target', 'burst_distinct_targets', 'pending_markers_in_burst_maps', 'lore_removal_patches', 'trade_offer_dumps',
-          'trade_map_ids', 'trade_locating_lore', 'dolphin_search_logged', 'mixin_errors', 'exceptions'):
+          'trade_map_ids', 'trade_locating_lore', 'dolphin_search_logged', 'stale_map_finished', 'stale_map_restart_logged', 'mixin_errors', 'exceptions'):
     print(f'- {k}: {out[k]}')

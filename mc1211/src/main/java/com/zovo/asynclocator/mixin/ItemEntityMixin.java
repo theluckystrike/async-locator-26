@@ -18,6 +18,6 @@ public abstract class ItemEntityMixin {
 	@Inject(method = "tick", at = @At("HEAD"))
 	private void asynclocator$finishDroppedMap(CallbackInfo ci) {
 		ItemStack stack = getItem();
-		if (!stack.isEmpty() && ((ItemEntity) (Object) this).level() instanceof ServerLevel level) MapLogic.resolve(stack, level);
+		if (!stack.isEmpty() && ((ItemEntity) (Object) this).level() instanceof ServerLevel level) MapLogic.resolve(stack, level, null);
 	}
 }

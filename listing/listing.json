@@ -1,24 +1,39 @@
 {
   "slug": "async-locator-26",
   "title": "Async Locator 26",
-  "summary": "Runs /locate, treasure and explorer maps, trader maps, dolphins and eyes of ender structure searches off the server thread. Fabric 26.x and 1.21.11.",
+  "summary": "Runs /locate, treasure and explorer maps, trader maps, dolphins and eyes of ender structure searches off the server thread. Fabric 26.3 and 1.21.11.",
   "project_type": "mod",
-  "categories": ["optimization", "utility"],
-  "additional_categories": ["worldgen"],
+  "categories": [
+    "optimization",
+    "utility"
+  ],
+  "additional_categories": [
+    "worldgen"
+  ],
   "client_side": "optional",
   "server_side": "required",
   "license_id": "MIT",
   "source_url": "https://github.com/theluckystrike/async-locator-26",
   "issues_url": "https://github.com/theluckystrike/async-locator-26/issues",
   "wiki_url": "https://github.com/theluckystrike/async-locator-26#readme",
-  "donation_urls": [{"id": "github", "platform": "GitHub Sponsors", "url": "https://github.com/sponsors/theluckystrike"}],
+  "donation_urls": [
+    {
+      "id": "github",
+      "platform": "GitHub Sponsors",
+      "url": "https://github.com/sponsors/theluckystrike"
+    }
+  ],
   "versions": [
     {
       "version_number": "1.0.0+26.x",
-      "name": "Async Locator 26 1.0.0 for 26.x",
+      "name": "Async Locator 26 1.0.0 for 26.3",
       "version_type": "release",
-      "loaders": ["fabric"],
-      "game_versions": ["26.3"],
+      "loaders": [
+        "fabric"
+      ],
+      "game_versions": [
+        "26.3"
+      ],
       "featured": true,
       "changelog_file": "CHANGELOG.md",
       "file": "mc26/build/libs/async-locator-26-fabric-1.0.0+26.x.jar"
@@ -27,16 +42,30 @@
       "version_number": "1.0.0+1.21.11",
       "name": "Async Locator 26 1.0.0 for 1.21.11",
       "version_type": "release",
-      "loaders": ["fabric"],
-      "game_versions": ["1.21.11"],
+      "loaders": [
+        "fabric"
+      ],
+      "game_versions": [
+        "1.21.11"
+      ],
       "featured": true,
       "changelog_file": "CHANGELOG.md",
       "file": "mc1211/build/libs/async-locator-26-fabric-1.0.0+1.21.11.jar"
     }
   ],
   "gallery": [
-    {"file": "listing/gallery/tick-times.png", "title": "Tick times, vanilla vs mod", "description": "Longest server tick per case on a headless Fabric 26.3 server, same seed, median of 3 runs each.", "featured": true},
-    {"file": "listing/gallery/console-26.3.png", "title": "Real run on 26.3", "description": "Server console with the mod: /locate answers from the background thread while the server keeps ticking.", "featured": false}
+    {
+      "file": "listing/gallery/tick-times.png",
+      "title": "Tick times, vanilla vs mod",
+      "description": "Longest server tick per case on a headless Fabric 26.3 server, same seed, median of 3 runs each.",
+      "featured": true
+    },
+    {
+      "file": "listing/gallery/console-26.3.png",
+      "title": "Real run on 26.3",
+      "description": "Server console with the mod: /locate answers from the background thread while the server keeps ticking.",
+      "featured": false
+    }
   ],
   "icon": "listing/icon.png"
 }

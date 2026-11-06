@@ -49,7 +49,7 @@ public abstract class LocateCommandMixin {
 					Duration.ofNanos(System.nanoTime() - t0)
 				);
 			}
-		});
+		}, () -> source.sendFailure(Component.literal("The search for " + resourceOrTag.asPrintable() + " failed. See the server log.")));
 		cir.setReturnValue(0);
 	}
 }

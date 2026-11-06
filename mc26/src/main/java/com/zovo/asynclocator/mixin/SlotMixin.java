@@ -18,6 +18,12 @@ public abstract class SlotMixin {
 
 	@Inject(method = "mayPickup", at = @At("HEAD"), cancellable = true)
 	private void asynclocator$holdPendingMaps(Player player, CallbackInfoReturnable<Boolean> cir) {
-		if (MapLogic.blocksPickup(getItem(), player.level() instanceof ServerLevel sl ? sl : null)) cir.setReturnValue(false);
+		ItemStack stack = getItem();
+		if (player.level() instanceof ServerLevel level) {
+			if (MapLogic.resolve(stack, level, null)) cir.setReturnValue(false);
+		} else if (!stack.isEmpty() && MapLogic.pendingId(stack) != null) {
+			// Client side (single player or a client with the mod): only predict the server's answer.
+			cir.setReturnValue(false);
+		}
 	}
 }
