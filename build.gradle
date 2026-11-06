@@ -1,0 +1,9 @@
+plugins {
+	id 'net.fabricmc.fabric-loom' version "${loom_version}" apply false
+	id 'net.fabricmc.fabric-loom-remap' version "${loom_version}" apply false
+}
+subprojects {
+	group = project.maven_group
+	version = project.mod_version
+	repositories { mavenCentral() }
+}

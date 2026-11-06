@@ -1,0 +1,25 @@
+{
+	"required": true,
+	"minVersion": "0.8",
+	"package": "com.zovo.asynclocator.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"DolphinAccessor",
+		"DolphinSwimToTreasureGoalMixin",
+		"EnderEyeItemMixin",
+		"ExplorationMapFunctionMixin",
+		"ItemEntityMixin",
+		"LocateCommandInvoker",
+		"LocateCommandMixin",
+		"MapItemMixin",
+		"MerchantMenuAccessor",
+		"MerchantOfferAccessor",
+		"MinecraftServerMixin",
+		"ServerChunkCacheMixin",
+		"SlotMixin",
+		"TreasureMapForEmeraldsMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

@@ -1,0 +1,16 @@
+plugins { id 'net.fabricmc.fabric-loom' }
+base { archivesName = 'async-locator-26-fabric' }
+version = "${project.mod_version}+26.x"
+sourceSets.main.java.srcDir '../common/src/main/java'
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+}
+processResources {
+	def v = project.version
+	inputs.property 'version', v
+	filesMatching('fabric.mod.json') { expand 'version': v }
+}
+tasks.withType(JavaCompile).configureEach { it.options.release = 25; it.options.encoding = 'UTF-8' }
+java { sourceCompatibility = JavaVersion.VERSION_25; targetCompatibility = JavaVersion.VERSION_25 }
+jar { from(rootProject.file('LICENSE')) { rename { "${it}_async-locator-26" } } }

@@ -1,0 +1,9 @@
+pluginManagement {
+	repositories {
+		maven { name = 'Fabric'; url = 'https://maven.fabricmc.net/' }
+		mavenCentral()
+		gradlePluginPortal()
+	}
+}
+rootProject.name = 'async-locator-26'
+include 'common', 'mc26', 'mc1211'

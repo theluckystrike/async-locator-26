@@ -1,0 +1,25 @@
+{
+	"schemaVersion": 1,
+	"id": "async-locator-26",
+	"version": "${version}",
+	"name": "Async Locator 26",
+	"description": "Moves structure searches (/locate, explorer and treasure maps, dolphins, eyes of ender) off the server thread so the server does not freeze.",
+	"authors": ["theluckystrike"],
+	"contributors": ["bright_spark (original Async Locator idea, MIT)"],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/async-locator-26",
+		"sources": "https://github.com/theluckystrike/async-locator-26",
+		"issues": "https://github.com/theluckystrike/async-locator-26/issues"
+	},
+	"license": "MIT",
+	"icon": "assets/async-locator-26/icon.png",
+	"environment": "*",
+	"entrypoints": { "main": ["com.zovo.asynclocator.AsyncLocatorMod"] },
+	"mixins": ["async-locator-26.mixins.json"],
+	"depends": {
+		"fabricloader": ">=0.17.0",
+		"minecraft": ">=26.1 <26.4",
+		"java": ">=25"
+	},
+	"breaks": { "asynclocator": "*" }
+}
