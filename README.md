@@ -109,11 +109,21 @@ EULA_OK=1 scripts/bench.sh 26.3 3             # vanilla vs mod, 3 runs each
 
 `scripts/real-run.sh` downloads the official Fabric server launcher, starts a headless server with a fixed seed, sends `/locate` for three structures, rolls 16 treasure maps at once, has a cartographer generate trades, summons a dolphin with a fish, and reads every tick time over JMX. Then it stops the server and deletes the world. `EULA_OK=1` writes `eula=true` for that local test server. Only set it if you accept the [Minecraft EULA](https://aka.ms/MinecraftEULA).
 
-## Support
+[zovo-support-start]: #
 
-The mod is free and MIT licensed. If it saves your server some lag, you can support the work on [GitHub Sponsors](https://github.com/sponsors/theluckystrike).
+## Support Zovo
 
-More from the same author. [BucketBackup](https://modrinth.com/plugin/bucketbackup) backs up Paper worlds to S3, R2 or B2.
+Zovo builds and maintains Async Locator 26, and every feature stays free. If it saves you time, you can support the work on [GitHub Sponsors](https://github.com/sponsors/theluckystrike). Sponsorship is optional, and the tool works the same without it.
+
+Bug reports and ideas go to the issue tracker of this repository.
+
+Zovo is made by [theluckystrike](https://github.com/theluckystrike) on GitHub.
+
+## More tools by Zovo
+
+- [BucketBackup](https://github.com/theluckystrike/bucketbackup). Backs up Paper worlds to S3, Cloudflare R2, Backblaze B2, Wasabi or MinIO on a schedule.
+
+[zovo-support-end]: #
 
 ## License
 

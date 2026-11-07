@@ -52,4 +52,21 @@ Server side only. Players do not need the mod, and it works in single player as 
 - A map whose search finds nothing is removed, and a trade map that finds nothing is marked sold out.
 - Among the 26.x versions only 26.3 is supported, because 26.1 and 26.2 differ in the code the mod hooks into.
 
-Free and open source under the MIT license. If it helps your server, you can support the work on [GitHub Sponsors](https://github.com/sponsors/theluckystrike).
+Free and open source under the MIT license.
+
+[zovo-support-start]: #
+
+## Support Zovo
+
+Zovo builds and maintains Async Locator 26, and every feature stays free. If it saves you time, you can support the work on [GitHub Sponsors](https://github.com/sponsors/theluckystrike). Sponsorship is optional, and the tool works the same without it.
+
+Bug reports and ideas go to the issue tracker linked on this page.
+
+Zovo is made by [theluckystrike](https://github.com/theluckystrike) on GitHub.
+
+## More tools by Zovo
+
+- [BucketBackup](https://github.com/theluckystrike/bucketbackup). Backs up Paper worlds to S3, Cloudflare R2, Backblaze B2, Wasabi or MinIO on a schedule.
+- [All Zovo tools on GitHub](https://github.com/theluckystrike?tab=repositories). Free developer tools, including VS Code extensions and Apify Actors.
+
+[zovo-support-end]: #
